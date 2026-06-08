@@ -31,9 +31,11 @@ $githubApiUrl = 'https://api.github.com/repos/filips123/PWAsForFirefox/releases/
 try {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     $release = Invoke-RestMethod -Uri $githubApiUrl
-    $asset = $release.assets | Where-Object { $_.name -match 'FirefoxPWA-.*-x64\.msi$' }
     
-    if (-not $asset) { throw 'Could not locate x64 MSI installer in the latest release.' }
+    # Updated regex asset matching pattern to match the newest repository naming syntax
+    $asset = $release.assets | Where-Object { $_.name -match 'firefoxpwa-.*-x86_64\.msi$' }
+    
+    if (-not $asset) { throw 'Could not locate x86_64 MSI installer in the latest release.' }
 
     $tempMsiPath = Join-Path $env:TEMP $asset.name
     Write-Host "Downloading $($asset.name)..." -ForegroundColor Cyan
