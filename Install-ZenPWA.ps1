@@ -17,9 +17,11 @@ $ErrorActionPreference = 'Stop'
 # --- 1. Clean Handling: Check if Zen Browser is running ---
 $zenProcesses = Get-Process -Name 'zen' -ErrorAction SilentlyContinue
 if ($zenProcesses) {
-    Write-Host 'WARNING: Zen Browser is currently open.' -ForegroundColor Yellow
-    Write-Host 'Please close Zen Browser so configuration files can be safely modified without locks.' -ForegroundColor Yellow
-    Exit
+    Write-Host '`n[!] ERROR: Zen Browser is currently open.' -ForegroundColor Red
+    Write-Host 'Please completely close Zen Browser so configuration files can be safely modified without profile locks.' -ForegroundColor Yellow
+    Write-Host '`nPress ENTER to exit this installer...' -ForegroundColor Cyan
+    Read-Host
+    return
 }
 
 Write-Host 'Zen Browser is closed. Proceeding with seamless installation...' -ForegroundColor Green
