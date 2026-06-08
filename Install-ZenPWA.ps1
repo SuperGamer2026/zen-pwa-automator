@@ -9,22 +9,24 @@
     3. LINK ROUTING ENHANCEMENT: Appends 'firefoxpwa.openOutOfScopeInDefaultBrowser'
        to route out-of-scope interactions correctly.
     4. ELEGANT DESIGN: Injects custom CSS to eliminate legacy borders for Zen.
-    5. CLEAN HANDLING: Exits with a safe warning if Zen is currently running.
+    5. CLEAN HANDLING: Loops and pauses if Zen is running, allowing hot-reload.
 #>
 
 $ErrorActionPreference = 'Stop'
 
-# --- 1. Clean Handling: Check if Zen Browser is running ---
+# --- 1. Clean Handling: Check if Zen Browser is running (UX Loop) ---
 $zenProcesses = Get-Process -Name 'zen' -ErrorAction SilentlyContinue
-if ($zenProcesses) {
-    Write-Host '`n[!] ERROR: Zen Browser is currently open.' -ForegroundColor Red
-    Write-Host 'Please completely close Zen Browser so configuration files can be safely modified without profile locks.' -ForegroundColor Yellow
-    Write-Host '`nPress ENTER to exit this installer...' -ForegroundColor Cyan
+while ($zenProcesses) {
+    Write-Host '`n[!] ATTENTION: Zen Browser is currently open.' -ForegroundColor Yellow
+    Write-Host 'Please close Zen Browser so configuration files can be safely updated without profile locks.' -ForegroundColor White
+    Write-Host 'Once Zen is completely closed, press ENTER to continue installation...' -ForegroundColor Cyan
     Read-Host
-    return
+    
+    # Re-check the system process status
+    $zenProcesses = Get-Process -Name 'zen' -ErrorAction SilentlyContinue
 }
 
-Write-Host 'Zen Browser is closed. Proceeding with seamless installation...' -ForegroundColor Green
+Write-Host '`nZen Browser is closed. Proceeding with seamless installation...' -ForegroundColor Green
 
 # --- 2. Silent Installation from GitHub ---
 Write-Host 'Fetching the latest FirefoxPWA runtime release...' -ForegroundColor Cyan
