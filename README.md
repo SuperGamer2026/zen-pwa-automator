@@ -14,4 +14,4 @@ An open-source, automated utility designed to instantly inject native-feeling Pr
 2. Copy and paste the single line command below, then press **Enter**:
 
 ```powershell
- $url = "https://raw.githubusercontent.com/SuperGamer2026/zen-pwa-automator/main/Install-ZenPWA.ps1"; Set-ExecutionPolicy RemoteSigned -Scope Process; Invoke-RestMethod -Uri $url | Invoke-Expression
+$url = "https://raw.githubusercontent.com/SuperGamer2026/zen-pwa-automator/main/Install-ZenPWA.ps1"; Set-ExecutionPolicy RemoteSigned -Scope Process; Invoke-RestMethod -Uri $url | Invoke-Expression
