@@ -32,7 +32,7 @@ try {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     $release = Invoke-RestMethod -Uri $githubApiUrl
     
-    # Updated regex asset matching pattern to match the newest repository naming syntax
+    # Corrected asset pattern matching to cleanly capture lowercase names with '_64' formatting
     $asset = $release.assets | Where-Object { $_.name -match 'firefoxpwa-.*-x86_64\.msi$' }
     
     if (-not $asset) { throw 'Could not locate x86_64 MSI installer in the latest release.' }
